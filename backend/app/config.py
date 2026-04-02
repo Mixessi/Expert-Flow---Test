@@ -2,7 +2,7 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    database_url: str = "postgresql+asyncpg://expertflow:expertflow_dev@localhost:5432/expertflow"
+    database_url: str = "sqlite+aiosqlite:///./expertflow.db"
     anthropic_api_key: str = ""
     whisper_api_key: str = ""
     cors_origins: str = "http://localhost:3000"
