@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.env
+expertflow.db
+uploads/
+.git/

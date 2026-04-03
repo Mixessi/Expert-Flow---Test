@@ -72,9 +72,12 @@ export default function LiveInterviewPage() {
     }
   }, []);
 
-  const wsUrl = typeof window !== 'undefined'
-    ? `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//localhost:8000/api/v1/ws/interview/${interviewId}`
-    : null;
+  const wsUrl = (() => {
+    if (typeof window === 'undefined') return null;
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
+    const wsBase = apiUrl.replace(/^http/, 'ws').replace(/\/api\/v1\/?$/, '');
+    return `${wsBase}/api/v1/ws/interview/${interviewId}`;
+  })();
 
   const { isConnected, sendMessage } = useWebSocket(wsUrl, {
     onMessage: handleWSMessage,
