@@ -1,10 +1,132 @@
+import json
+import logging
+
 import anthropic
 
 from app.config import settings
 
+logger = logging.getLogger(__name__)
+
+
+def _has_api_key() -> bool:
+    return bool(settings.anthropic_api_key)
+
 
 def get_client() -> anthropic.AsyncAnthropic:
     return anthropic.AsyncAnthropic(api_key=settings.anthropic_api_key)
+
+
+# --- Mock responses for demo without API key ---
+
+MOCK_RESEARCH = json.dumps({
+    "company_overview": "[Demo 模式] 这是一个模拟的公司概览。配置 ANTHROPIC_API_KEY 后将使用真实 AI 分析。\n\n示例：该公司成立于2015年，主营业务为新能源汽车动力电池研发与制造，2025年营收约120亿元。",
+    "industry_data": "[Demo 模式] 模拟行业数据。\n\n全球动力电池市场规模约5000亿元，年增长率25%。市场格局呈头部集中趋势，CR3 约65%。",
+    "key_numbers": [
+        {"metric": "市场规模", "value": "5000亿元", "source": "Demo数据", "date": "2025"},
+        {"metric": "行业增速", "value": "25%", "source": "Demo数据", "date": "2025"},
+        {"metric": "CR3集中度", "value": "65%", "source": "Demo数据", "date": "2025"}
+    ],
+    "info_gaps": [
+        "该公司2026年产能扩张计划的具体细节",
+        "新一代电池技术的量产时间表",
+        "海外市场拓展的实际进展"
+    ]
+}, ensure_ascii=False)
+
+MOCK_OUTLINE = json.dumps({
+    "sections": [
+        {
+            "title": "开场验证（TQ 测试问题）",
+            "purpose": "快速验证专家可信度",
+            "questions": [
+                {"text": "[Demo] 贵公司2025年的动力电池出货量大约是多少GWh？", "rationale": "验证专家对基础数据的掌握程度", "priority": "high", "type": "test_question", "expected_info": "具体出货量数字"}
+            ]
+        },
+        {
+            "title": "核心业务与竞争格局",
+            "purpose": "了解公司在行业中的定位与竞争优势",
+            "questions": [
+                {"text": "[Demo] 目前公司最大的竞争优势体现在哪些方面？", "rationale": "了解核心竞争力", "priority": "high", "type": "core", "expected_info": "技术/成本/客户关系等维度"},
+                {"text": "[Demo] 与主要竞争对手相比，成本结构上有什么差异？", "rationale": "量化竞争优势", "priority": "medium", "type": "core", "expected_info": "具体成本数据"}
+            ]
+        },
+        {
+            "title": "未来发展与风险",
+            "purpose": "评估增长前景和潜在风险",
+            "questions": [
+                {"text": "[Demo] 未来2年的产能扩张计划是怎样的？", "rationale": "评估增长潜力", "priority": "high", "type": "core", "expected_info": "产能数字和时间表"},
+                {"text": "[Demo] 目前面临的最大挑战或风险是什么？", "rationale": "识别风险因素", "priority": "medium", "type": "follow_up", "expected_info": "风险描述"}
+            ]
+        }
+    ],
+    "estimated_duration_minutes": 60,
+    "key_hypotheses": [
+        "[Demo] 假设1: 该公司有望在2026年实现市场份额提升",
+        "[Demo] 假设2: 新技术路线将带来成本优势"
+    ]
+}, ensure_ascii=False)
+
+MOCK_FOLLOWUP = json.dumps([
+    {"text": "[Demo] 您刚才提到的增长数字，能否具体说明是哪个业务板块的？", "rationale": "专家提到增长但未展开细节", "priority": "high", "trigger": "信息未展开"},
+    {"text": "[Demo] 这个利润率水平在行业中处于什么位置？", "rationale": "需要横向对比来验证数据合理性", "priority": "medium", "trigger": "缺乏对比"}
+], ensure_ascii=False)
+
+MOCK_CROSSCHECK = json.dumps({
+    "checks": [],
+    "inconsistencies": []
+}, ensure_ascii=False)
+
+MOCK_CREDIBILITY = json.dumps({
+    "score": 0.7,
+    "level": "medium",
+    "factors": [
+        {"dimension": "信息具体性", "score": 0.7, "evidence": "[Demo] 等待更多数据", "concern": ""},
+        {"dimension": "内部一致性", "score": 0.8, "evidence": "[Demo] 暂无矛盾", "concern": ""},
+        {"dimension": "领域匹配度", "score": 0.6, "evidence": "[Demo] 待评估", "concern": ""}
+    ],
+    "recommendation": "[Demo 模式] 配置 API Key 后将提供真实的可信度评估"
+}, ensure_ascii=False)
+
+MOCK_NOTES = """# 访谈纪要 [Demo 模式]
+
+> 配置 ANTHROPIC_API_KEY 后将生成真实的 AI 访谈纪要
+
+## 基本信息
+- 本纪要为 Demo 演示数据
+
+## 核心发现摘要
+1. [Demo] 这里将展示基于访谈内容的核心发现
+2. [Demo] AI 会按主题维度组织关键信息
+
+## 关键数字汇总表
+| 数字 | 上下文 | Cross Check | 可信度 |
+|------|--------|-------------|--------|
+| [Demo] | 示例数据 | 待验证 | - |
+
+## 待跟进问题
+- [Demo] 需要在后续访谈中深入了解的问题
+
+## 行动建议
+- [Demo] 建议安排后续访谈验证关键假设
+"""
+
+
+def _get_mock(system_prompt: str) -> str:
+    """Return appropriate mock response based on the prompt type."""
+    prompt_lower = system_prompt[:100].lower()
+    if "调研" in prompt_lower or "research" in prompt_lower:
+        return MOCK_RESEARCH
+    elif "提纲" in prompt_lower or "outline" in prompt_lower:
+        return MOCK_OUTLINE
+    elif "追问" in prompt_lower or "follow" in prompt_lower:
+        return MOCK_FOLLOWUP
+    elif "校验" in prompt_lower or "cross" in prompt_lower or "数字" in prompt_lower:
+        return MOCK_CROSSCHECK
+    elif "可信度" in prompt_lower or "credib" in prompt_lower:
+        return MOCK_CREDIBILITY
+    elif "纪要" in prompt_lower or "note" in prompt_lower:
+        return MOCK_NOTES
+    return '{"message": "[Demo 模式] 请配置 ANTHROPIC_API_KEY 启用 AI 功能"}'
 
 
 async def generate(
@@ -14,6 +136,10 @@ async def generate(
     temperature: float = 0.7,
     model: str = "claude-sonnet-4-20250514",
 ) -> str:
+    if not _has_api_key():
+        logger.info("No API key configured, returning mock response")
+        return _get_mock(system_prompt)
+
     client = get_client()
     response = await client.messages.create(
         model=model,
@@ -33,6 +159,10 @@ async def generate_with_thinking(
     model: str = "claude-sonnet-4-20250514",
 ) -> str:
     """Generate with extended thinking for deep research tasks."""
+    if not _has_api_key():
+        logger.info("No API key configured, returning mock response")
+        return _get_mock(system_prompt)
+
     client = get_client()
     response = await client.messages.create(
         model=model,
@@ -44,7 +174,6 @@ async def generate_with_thinking(
         system=system_prompt,
         messages=[{"role": "user", "content": user_message}],
     )
-    # Return the text block (skip thinking blocks)
     for block in response.content:
         if block.type == "text":
             return block.text
@@ -58,6 +187,10 @@ async def generate_with_search(
     model: str = "claude-sonnet-4-20250514",
 ) -> str:
     """Generate with web search tool for research tasks."""
+    if not _has_api_key():
+        logger.info("No API key configured, returning mock response")
+        return _get_mock(system_prompt)
+
     client = get_client()
     response = await client.messages.create(
         model=model,
@@ -66,7 +199,6 @@ async def generate_with_search(
         tools=[{"type": "web_search_20250305"}],
         messages=[{"role": "user", "content": user_message}],
     )
-    # Extract text blocks from response
     texts = []
     for block in response.content:
         if block.type == "text":
@@ -82,6 +214,11 @@ async def stream_generate(
     model: str = "claude-sonnet-4-20250514",
 ):
     """Stream generation for long-form content like meeting notes."""
+    if not _has_api_key():
+        logger.info("No API key configured, yielding mock response")
+        yield _get_mock(system_prompt)
+        return
+
     client = get_client()
     async with client.messages.stream(
         model=model,
