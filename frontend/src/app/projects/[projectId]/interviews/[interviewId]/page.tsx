@@ -212,10 +212,10 @@ export default function InterviewDetailPage() {
         <Card>
           <CardHeader className="flex items-center justify-between">
             <h3 className="font-semibold text-gray-900">Step 2: 参考文档</h3>
-            <label>
-              <Button as="span" size="sm" variant="secondary" loading={uploadingDoc}>
-                上传文档
-              </Button>
+            <label className="cursor-pointer">
+              <span className={`inline-flex items-center justify-center font-medium rounded-lg transition-colors px-3 py-1.5 text-sm bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-300 ${uploadingDoc ? 'opacity-50 pointer-events-none' : ''}`}>
+                {uploadingDoc ? '上传中...' : '上传文档'}
+              </span>
               <input type="file" className="hidden" onChange={handleUpload} accept=".pdf,.docx,.doc,.txt,.md,.csv" />
             </label>
           </CardHeader>
