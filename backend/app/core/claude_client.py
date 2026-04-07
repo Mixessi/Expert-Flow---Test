@@ -32,7 +32,7 @@ def _get_model(default: str = "claude-sonnet-4-20250514") -> str:
         return settings.ai_model
     provider = _get_provider()
     if provider == "openrouter":
-        return "anthropic/claude-3.5-sonnet"
+        return "google/gemini-2.0-flash-001"
     return default
 
 
