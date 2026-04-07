@@ -130,7 +130,7 @@ if %errorlevel% equ 0 (
     echo.
 )
 
-echo   关闭此窗口将停止所有服务
-echo   或按 Ctrl+C 停止
+echo   Close this window to stop all services.
+echo   Press Ctrl+C to stop.
 echo.
 pause
