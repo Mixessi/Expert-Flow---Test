@@ -1,4 +1,5 @@
 import json
+import logging
 import uuid
 
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -6,6 +7,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.claude_client import generate_with_search
 from app.core.prompt_templates import RESEARCH_SYSTEM_PROMPT
 from app.models.research_result import ResearchResult
+
+logger = logging.getLogger(__name__)
 
 
 async def run_research(
@@ -50,6 +53,7 @@ async def run_research(
         research.raw_response = raw_response
         research.status = "completed"
     except Exception as e:
+        logger.error(f"Research failed: {type(e).__name__}: {e}")
         research.status = "failed"
         research.raw_response = str(e)
 

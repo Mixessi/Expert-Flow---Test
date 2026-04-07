@@ -9,7 +9,9 @@ logger = logging.getLogger(__name__)
 
 
 def _has_api_key() -> bool:
-    return bool(settings.anthropic_api_key)
+    has_key = bool(settings.anthropic_api_key)
+    logger.info(f"API key check: {'configured' if has_key else 'NOT configured'} (length={len(settings.anthropic_api_key)})")
+    return has_key
 
 
 def get_client() -> anthropic.AsyncAnthropic:
