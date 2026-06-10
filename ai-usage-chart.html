@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>头条用户对 AI 产品的使用 · 频次分布</title>
+<meta name="description" content="头条用户 AI 产品使用频次调研可视化：83.1% 的用户每周至少使用一次，36.7% 已形成每日使用习惯。N=439。">
+<style>
+:root{
+  --red:#F04142; --red-dark:#C5292A; --red-50:#FDF0F0; --red-100:#F8B5B6;
+  --blue:#3B5BDB; --blue-50:#EBEFFC;
+  --ink-1:#1F2329; --ink-2:#4E5969; --ink-3:#86909C;
+  --line:#E5E6EB; --bg-soft:#F7F8FA;
+  --radius:12px; --shadow:0 2px 8px rgba(31,35,41,.06);
+  --font:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC","WenQuanYi Zen Hei",sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);color:var(--ink-2);background:var(--bg-soft);font-size:16px;line-height:1.75;-webkit-font-smoothing:antialiased;padding:48px 16px}
+.card{max-width:1080px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:36px 40px 28px}
+.eyebrow{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:600;color:var(--red);letter-spacing:.18em;margin-bottom:10px}
+.eyebrow::before{content:"";width:24px;height:2px;background:var(--red)}
+h1{color:var(--ink-1);font-size:26px;font-weight:700;line-height:1.35}
+.sub{margin-top:6px;font-size:14px;color:var(--ink-3);max-width:680px}
+.sub b{color:var(--ink-1)}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0 8px}
+.kpi{border:1px solid var(--line);border-radius:10px;padding:14px 18px;position:relative;overflow:hidden}
+.kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--k-color,var(--red))}
+.kpi .num{font-size:30px;font-weight:700;color:var(--k-color,var(--red));font-variant-numeric:tabular-nums;line-height:1.2}
+.kpi .lbl{font-size:13px;color:var(--ink-2);margin-top:2px}
+.kpi.k-blue{--k-color:#3B5BDB}
+.kpi.k-gray{--k-color:#86909C}
+#chart{width:100%;height:480px}
+.note{margin-top:8px;font-size:12.5px;color:var(--ink-3);border-top:1px dashed var(--line);padding-top:12px}
+.fallback{padding:12px 0}
+.fallback .row{display:flex;align-items:center;gap:12px;margin:8px 0;font-size:13px}
+.fallback .name{width:110px;text-align:right;color:var(--ink-2);flex:none}
+.fallback .track{flex:1;background:var(--bg-soft);border-radius:4px;height:18px;overflow:hidden}
+.fallback .bar{height:100%;border-radius:4px}
+.fallback .val{width:56px;font-weight:600;color:var(--ink-1);font-variant-numeric:tabular-nums}
+@media (max-width:760px){
+  body{padding:16px 8px}
+  .card{padding:22px 18px}
+  h1{font-size:21px}
+  .kpis{grid-template-columns:1fr;gap:10px}
+  #chart{height:380px}
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="eyebrow">DATA INSIGHT · AI 使用频次</div>
+  <h1>头条用户对 AI 产品的使用</h1>
+  <p class="sub">AI 已从「尝鲜」走向「日常」：超过八成用户每周至少使用一次 AI 产品，其中超过三分之一已形成<b>每日使用习惯</b>。</p>
+
+  <div class="kpis">
+    <div class="kpi"><div class="num">36.7%</div><div class="lbl">每天都用 · 已形成日常习惯</div></div>
+    <div class="kpi k-blue"><div class="num">83.1%</div><div class="lbl">每周至少使用一次（周活跃）</div></div>
+    <div class="kpi k-gray"><div class="num">16.9%</div><div class="lbl">月度低频或几乎不用</div></div>
+  </div>
+
+  <div id="chart"></div>
+
+  <p class="note">数据来源：用户调研，N=439，"过去 1 个月，你使用 AI 产品的频次是什么样的？"。人数为按占比折算的约数。</p>
+</div>
+
+<script>
+const N = 439;
+const DATA = [
+  { name: '每天都用',    value: 36.7, group: 'daily' },
+  { name: '每周5-6天',  value: 9.8,  group: 'weekly' },
+  { name: '每周3-4天',  value: 17.5, group: 'weekly' },
+  { name: '每周1-2天',  value: 19.1, group: 'weekly' },
+  { name: '每个月3-4天', value: 4.1,  group: 'monthly' },
+  { name: '每个月1-2天', value: 5.5,  group: 'monthly' },
+  { name: '几乎没怎么用', value: 7.3,  group: 'rare' }
+];
+const GROUP = {
+  daily:   { label: '每日使用',   top: '#FF8F1F', bottom: '#F04142', text: '#E03435' },
+  weekly:  { label: '每周使用',   top: '#5B7BE9', bottom: '#3B5BDB', text: '#3B5BDB' },
+  monthly: { label: '每月低频',   top: '#A8B0BC', bottom: '#86909C', text: '#6B7785' },
+  rare:    { label: '几乎不用',   top: '#CDD2DA', bottom: '#B4BBC6', text: '#86909C' }
+};
+const people = v => Math.round(N * v / 100);
+
+/* ---- ECharts 多 CDN 加载 + 降级（与主站一致） ---- */
+const ECHARTS_URLS = [
+  'https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js',
+  'https://unpkg.com/echarts@5.5.0/dist/echarts.min.js',
+  'https://cdn.bootcdn.net/ajax/libs/echarts/5.5.0/echarts.min.js'
+];
+function loadScript(url) {
+  return new Promise((ok, fail) => {
+    const s = document.createElement('script');
+    s.src = url; s.onload = ok; s.onerror = fail;
+    document.head.appendChild(s);
+  });
+}
+async function loadECharts() {
+  if (window.echarts) return window.echarts;
+  for (const url of ECHARTS_URLS) {
+    try { await loadScript(url); if (window.echarts) return window.echarts; } catch (e) { /* 尝试下一个 CDN */ }
+  }
+  return null;
+}
+
+function buildChart(ec, dom) {
+  const chart = ec.init(dom);
+  chart.setOption({
+    textStyle: { fontFamily: getComputedStyle(document.body).fontFamily, color: '#4E5969' },
+    grid: { left: 16, right: 16, top: 64, bottom: 8, containLabel: true },
+    tooltip: {
+      trigger: 'item',
+      backgroundColor: '#fff', borderColor: '#E5E6EB', borderWidth: 1,
+      textStyle: { color: '#1F2329', fontSize: 13 },
+      extraCssText: 'box-shadow:0 4px 16px rgba(31,35,41,.12);border-radius:8px;',
+      formatter: p => {
+        const d = DATA[p.dataIndex], g = GROUP[d.group];
+        return `<b>${d.name}</b>　<span style="color:${g.text}">${g.label}</span><br>` +
+               `选择占比：<b>${d.value}%</b><br>约 ${people(d.value)} 人 / ${N} 人`;
+      }
+    },
+    xAxis: {
+      type: 'category',
+      data: DATA.map(d => d.name),
+      axisLine: { lineStyle: { color: '#C9CDD4' } },
+      axisTick: { show: false },
+      axisLabel: { color: '#4E5969', fontSize: 13, interval: 0 }
+    },
+    yAxis: {
+      type: 'value', max: 40, interval: 10,
+      axisLabel: { color: '#86909C', formatter: '{value}%' },
+      splitLine: { lineStyle: { color: '#F0F1F3', type: 'dashed' } }
+    },
+    series: [{
+      type: 'bar',
+      barWidth: '52%',
+      data: DATA.map(d => {
+        const g = GROUP[d.group];
+        return {
+          value: d.value,
+          itemStyle: {
+            borderRadius: [8, 8, 0, 0],
+            color: { type: 'linear', x: 0, y: 0, x2: 0, y2: 1,
+              colorStops: [{ offset: 0, color: g.top }, { offset: 1, color: g.bottom }] }
+          },
+          label: {
+            show: true, position: 'top', distance: 6,
+            formatter: `{p|${d.value}%}\n{c|≈${people(d.value)}人}`,
+            rich: {
+              p: { fontSize: 15, fontWeight: 700, color: g.text, align: 'center', lineHeight: 20 },
+              c: { fontSize: 11, color: '#86909C', align: 'center', lineHeight: 14 }
+            }
+          }
+        };
+      }),
+      emphasis: { itemStyle: { shadowBlur: 12, shadowColor: 'rgba(31,35,41,.25)' } },
+      animationDelay: i => i * 90,
+      markArea: {
+        silent: true,
+        data: [
+          [{ xAxis: '每天都用',
+             itemStyle: { color: 'rgba(59,91,219,.045)' },
+             label: { show: true, position: 'insideTop', distance: 8,
+               formatter: '每周至少使用一次 · 83.1%', color: '#3B5BDB', fontSize: 12.5, fontWeight: 600 } },
+           { xAxis: '每周1-2天' }],
+          [{ xAxis: '每个月3-4天',
+             itemStyle: { color: 'rgba(134,144,156,.055)' },
+             label: { show: true, position: 'insideTop', distance: 8,
+               formatter: '月度及以下 · 16.9%', color: '#86909C', fontSize: 12.5, fontWeight: 600 } },
+           { xAxis: '几乎没怎么用' }]
+        ]
+      }
+    }]
+  });
+  window.addEventListener('resize', () => chart.resize());
+  return chart;
+}
+
+/* ---- 无 ECharts 时的 HTML 降级 ---- */
+function renderFallback(dom) {
+  dom.style.height = 'auto';
+  dom.innerHTML = '<div class="fallback">' + DATA.map(d => {
+    const g = GROUP[d.group];
+    return `<div class="row"><span class="name">${d.name}</span>` +
+           `<span class="track"><span class="bar" style="width:${d.value / 40 * 100}%;` +
+           `background:linear-gradient(90deg,${g.bottom},${g.top})"></span></span>` +
+           `<span class="val">${d.value}%</span></div>`;
+  }).join('') + '</div>';
+}
+
+(async () => {
+  const dom = document.getElementById('chart');
+  const ec = await loadECharts();
+  if (ec) buildChart(ec, dom); else renderFallback(dom);
+})();
+</script>
+</body>
+</html>
