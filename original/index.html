@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>今日头条战略复盘 2012–2026 · 从信息分发革命到生态让渡</title>
+<meta name="description" content="以战略分析师视角梳理今日头条14年发展史：算法奇袭、内容生态、监管洗礼、组织整合与AI重构，含互动时间线与数据图表。">
+<style>
+/* ============ 01 Tokens ============ */
+:root{
+  --red:#F04142; --red-dark:#C5292A; --red-50:#FDF0F0; --red-100:#F8B5B6;
+  --ink-1:#1F2329; --ink-2:#4E5969; --ink-3:#86909C;
+  --line:#E5E6EB; --bg-soft:#F7F8FA;
+  --c-product:#F04142; --c-capital:#D48806; --c-reg:#3B5BDB; --c-eco:#12B886;
+  --c-product-bg:#FDF0F0; --c-capital-bg:#FBF3E0; --c-reg-bg:#EBEFFC; --c-eco-bg:#E3F8F1;
+  --radius:12px; --shadow:0 2px 8px rgba(31,35,41,.06); --shadow-hover:0 8px 24px rgba(31,35,41,.12);
+  --font:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+}
+/* ============ 02 Reset + Base ============ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{font-family:var(--font);color:var(--ink-2);background:#fff;font-size:16px;line-height:1.75;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{color:var(--ink-1);line-height:1.35;font-weight:600}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+strong{color:var(--ink-1)}
+/* ============ 03 Layout ============ */
+.container{max-width:1200px;margin:0 auto;padding:0 32px}
+.section{padding:96px 0}
+.section.soft{background:var(--bg-soft)}
+.sec-head{margin-bottom:48px}
+.sec-eyebrow{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600;color:var(--red);letter-spacing:.2em;margin-bottom:12px}
+.sec-eyebrow::before{content:"";width:28px;height:2px;background:var(--red)}
+.sec-head h2{font-size:32px}
+.sec-head .sec-sub{margin-top:10px;color:var(--ink-3);font-size:15px;max-width:720px}
+/* ============ 04 Nav + Progress ============ */
+.nav{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:100}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 32px;height:100%;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.nav-brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--ink-1);font-size:15px;white-space:nowrap}
+.nav-logo{width:28px;height:28px;background:var(--red);color:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700}
+.nav-links{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-links a{font-size:14px;color:var(--ink-2);padding:6px 12px;border-radius:6px;white-space:nowrap;transition:color .2s,background .2s}
+.nav-links a:hover{color:var(--red)}
+.nav-links a.active{color:var(--red);background:var(--red-50);font-weight:600}
+.progress{position:absolute;bottom:-2px;left:0;height:2px;background:var(--red);width:0;transition:width .1s linear}
+/* ============ 05 Hero ============ */
+.hero{position:relative;padding:152px 0 88px;overflow:hidden}
+.hero-deco{position:absolute;top:-140px;right:-160px;width:560px;height:560px;background:radial-gradient(circle at 35% 35%,rgba(240,65,66,.16),rgba(240,65,66,.04) 55%,transparent 72%);border-radius:50%;pointer-events:none}
+.hero-deco2{position:absolute;top:120px;right:60px;width:200px;height:200px;background:linear-gradient(135deg,rgba(240,65,66,.10),transparent 70%);clip-path:polygon(0 0,100% 0,100% 100%);pointer-events:none}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--red);letter-spacing:.18em;border:1px solid var(--red-100);background:var(--red-50);padding:6px 14px;border-radius:999px;margin-bottom:24px}
+.hero h1{font-size:52px;font-weight:700;letter-spacing:.01em;max-width:760px}
+.hero h1 em{font-style:normal;color:var(--red)}
+.hero-sub{margin-top:20px;font-size:17px;color:var(--ink-2);max-width:720px}
+.hero-meta{margin-top:16px;font-size:13px;color:var(--ink-3)}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:24px;margin-top:56px}
+.stat-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px 20px;position:relative;overflow:hidden}
+.stat-card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--red)}
+.stat-num{font-size:40px;font-weight:700;color:var(--ink-1);font-variant-numeric:tabular-nums;line-height:1.15;white-space:nowrap}
+.stat-num .unit{font-size:20px;margin-left:2px;color:var(--red)}
+.stat-label{margin-top:8px;font-size:14px;font-weight:600;color:var(--ink-2)}
+.stat-note{margin-top:4px;font-size:12px;color:var(--ink-3)}
+/* ============ 06 Phases 阶段带 ============ */
+.phase-band{display:grid;grid-template-columns:repeat(5,1fr);margin-bottom:28px}
+.phase-seg{padding:14px 10px 14px 26px;color:#fff;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%,16px 50%);margin-right:-12px;text-align:left}
+.phase-seg:first-child{clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%);padding-left:18px}
+.phase-seg:last-child{margin-right:0}
+.phase-seg .p-range{font-size:12px;opacity:.85;font-variant-numeric:tabular-nums}
+.phase-seg .p-name{font-size:15px;font-weight:700;white-space:nowrap}
+.phase-seg.dark-text{color:#8C2B2B}
+.phase-cards{display:grid;grid-template-columns:repeat(5,1fr);gap:24px}
+.phase-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px 20px;border-top:4px solid var(--red);display:flex;flex-direction:column}
+.phase-card .p-range{font-size:12px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.phase-card h3{font-size:18px;margin:4px 0 8px}
+.phase-card .p-tag{font-size:13px;color:var(--ink-2);min-height:64px}
+.phase-card ul{margin-top:12px;flex:1}
+.phase-card li{font-size:13px;color:var(--ink-2);padding-left:14px;position:relative;margin-bottom:8px}
+.phase-card li::before{content:"";position:absolute;left:0;top:9px;width:5px;height:5px;border-radius:50%;background:var(--red)}
+.phase-metric{margin-top:14px;padding-top:14px;border-top:1px dashed var(--line)}
+.phase-metric .m-v{font-size:24px;font-weight:700;color:var(--red);font-variant-numeric:tabular-nums}
+.phase-metric .m-l{font-size:12px;color:var(--ink-3)}
+/* ============ 07 Timeline ============ */
+.tl-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:40px}
+.chip{font-size:13px;font-weight:600;padding:7px 16px;border-radius:999px;border:1.5px solid var(--line);color:var(--ink-2);cursor:pointer;background:#fff;transition:all .2s;font-family:var(--font)}
+.chip:hover{border-color:var(--ink-3)}
+.chip.is-active{color:#fff;border-color:transparent}
+.chip[data-filter="all"].is-active{background:var(--ink-1)}
+.chip[data-filter="product"].is-active{background:var(--c-product)}
+.chip[data-filter="capital"].is-active{background:var(--c-capital)}
+.chip[data-filter="regulation"].is-active{background:var(--c-reg)}
+.chip[data-filter="eco"].is-active{background:var(--c-eco)}
+.tl-count{margin-left:auto;font-size:13px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.tl-wrap{position:relative;padding:8px 0}
+.tl-wrap::before{content:"";position:absolute;top:0;bottom:0;left:50%;width:2px;margin-left:-1px;background:var(--line)}
+.tl-year{position:relative;width:84px;margin:8px auto 24px;text-align:center;background:var(--ink-1);color:#fff;font-size:14px;font-weight:700;border-radius:999px;padding:4px 0;z-index:2;font-variant-numeric:tabular-nums}
+.tl-item{position:relative;width:calc(50% - 44px);margin-bottom:22px}
+.tl-item.side-right{margin-left:calc(50% + 44px)}
+.tl-item.is-hidden,.tl-year.is-hidden{display:none}
+.tl-dot{position:absolute;top:22px;width:12px;height:12px;border-radius:50%;background:#fff;border:3px solid var(--ink-3);z-index:2}
+.side-left .tl-dot{right:-50px}
+.side-right .tl-dot{left:-50px}
+.tl-item::after{content:"";position:absolute;top:27px;width:32px;height:2px;background:var(--line)}
+.side-left::after{right:-38px}
+.side-right::after{left:-38px}
+.tl-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;transition:transform .25s,box-shadow .25s}
+@media(hover:hover){.tl-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-hover)}}
+.tl-date{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:3px 10px;border-radius:6px;margin-bottom:8px;font-variant-numeric:tabular-nums}
+.tl-item h4{font-size:16px;margin-bottom:6px}
+.tl-item p{font-size:13.5px;color:var(--ink-2)}
+.cat-product .tl-dot{border-color:var(--c-product)}
+.cat-capital .tl-dot{border-color:var(--c-capital)}
+.cat-regulation .tl-dot{border-color:var(--c-reg)}
+.cat-eco .tl-dot{border-color:var(--c-eco)}
+.cat-product .tl-date{color:var(--c-product);background:var(--c-product-bg)}
+.cat-capital .tl-date{color:var(--c-capital);background:var(--c-capital-bg)}
+.cat-regulation .tl-date{color:var(--c-reg);background:var(--c-reg-bg)}
+.cat-eco .tl-date{color:var(--c-eco);background:var(--c-eco-bg)}
+.tl-item.milestone .tl-card{border-left:4px solid var(--red);background:linear-gradient(180deg,#fff,var(--red-50))}
+.tl-item.milestone.cat-capital .tl-card{border-left-color:var(--c-capital);background:linear-gradient(180deg,#fff,var(--c-capital-bg))}
+.tl-item.milestone.cat-regulation .tl-card{border-left-color:var(--c-reg);background:linear-gradient(180deg,#fff,var(--c-reg-bg))}
+.tl-item.milestone.cat-eco .tl-card{border-left-color:var(--c-eco);background:linear-gradient(180deg,#fff,var(--c-eco-bg))}
+.tl-item.milestone .tl-dot{width:16px;height:16px;top:20px}
+.side-left.milestone .tl-dot{right:-52px}
+.side-right.milestone .tl-dot{left:-52px}
+/* ============ 08 Charts ============ */
+.chart-block{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px;margin-bottom:32px}
+.chart-block h3{font-size:19px;margin-bottom:4px}
+.chart-block .c-sub{font-size:13px;color:var(--ink-3);margin-bottom:16px}
+.chart-box{width:100%;height:420px}
+.chart-note{margin-top:12px;font-size:12.5px;color:var(--ink-3);border-top:1px dashed var(--line);padding-top:12px}
+.chart-fallback{padding:8px 0}
+.chart-fallback .fb-tip{font-size:12px;color:var(--ink-3);margin-bottom:12px}
+.fb-table{width:100%;border-collapse:collapse;font-size:13.5px}
+.fb-table th,.fb-table td{border-bottom:1px solid var(--line);padding:9px 10px;text-align:left;font-variant-numeric:tabular-nums}
+.fb-table th{color:var(--ink-3);font-weight:600;font-size:12.5px}
+.fb-table .hl{color:var(--red);font-weight:700}
+.fb-bar-row{display:grid;grid-template-columns:84px 1fr 84px;align-items:center;gap:12px;margin-bottom:10px;font-size:13px;font-variant-numeric:tabular-nums}
+.fb-bar-track{background:var(--bg-soft);border-radius:4px;height:18px;overflow:hidden}
+.fb-bar-fill{height:100%;background:linear-gradient(90deg,var(--red-100),var(--red));border-radius:4px}
+/* ============ 09 Ecosystem ============ */
+.eco-scroll{overflow-x:auto;padding-bottom:8px}
+.eco-grid{display:grid;grid-template-columns:96px repeat(5,1fr);gap:10px;min-width:980px}
+.eco-head{font-size:12.5px;font-weight:700;color:var(--ink-1);background:var(--bg-soft);border-radius:8px;padding:10px 8px;text-align:center}
+.eco-head .e-range{display:block;font-weight:400;color:var(--ink-3);font-size:11.5px;font-variant-numeric:tabular-nums}
+.eco-track{font-size:13px;font-weight:700;color:var(--ink-2);display:flex;align-items:center;justify-content:center;background:var(--red-50);color:var(--red-dark);border-radius:8px;padding:8px;text-align:center;writing-mode:initial}
+.eco-cell{display:flex;flex-direction:column;gap:8px;min-height:56px;background:var(--bg-soft);border-radius:8px;padding:8px}
+.eco-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:9px 11px;box-shadow:var(--shadow)}
+.eco-card .e-top{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.eco-card .e-name{font-size:13.5px;font-weight:700;color:var(--ink-1)}
+.eco-card.st-closed .e-name{text-decoration:line-through;color:var(--ink-3)}
+.eco-card.st-closed{opacity:.68}
+.eco-card .e-desc{font-size:11.5px;color:var(--ink-3);margin-top:2px}
+.badge{font-size:10.5px;font-weight:700;border-radius:4px;padding:1px 6px;white-space:nowrap}
+.badge.st-active{background:var(--red);color:#fff}
+.badge.st-closed{background:#E5E6EB;color:var(--ink-3)}
+.badge.st-merged{background:#fff;color:var(--ink-3);border:1px solid var(--ink-3)}
+.badge.st-shrink{background:var(--c-capital-bg);color:var(--c-capital)}
+.badge.st-jv{background:var(--c-reg-bg);color:var(--c-reg)}
+.eco-legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:18px;font-size:12.5px;color:var(--ink-3)}
+.eco-legend span{display:inline-flex;align-items:center;gap:6px}
+/* ============ 10 Compete 甘特 ============ */
+.gantt{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px;overflow-x:auto}
+.gantt-inner{min-width:860px}
+.g-axis{display:grid;grid-template-columns:120px 1fr 150px;margin-bottom:6px}
+.g-axis .g-ticks{position:relative;height:22px}
+.g-axis .g-tick{position:absolute;top:0;font-size:11.5px;color:var(--ink-3);transform:translateX(-50%);font-variant-numeric:tabular-nums}
+.g-row{display:grid;grid-template-columns:120px 1fr 150px;align-items:center;gap:0;margin-bottom:14px}
+.g-label{font-size:13.5px;font-weight:700;color:var(--ink-1);padding-right:12px}
+.g-label .g-sublabel{display:block;font-weight:400;font-size:11px;color:var(--ink-3)}
+.g-track{position:relative;height:26px;background:repeating-linear-gradient(90deg,var(--bg-soft) 0,var(--bg-soft) 1px,transparent 1px,transparent calc(100%/14));border-left:1px solid var(--line)}
+.g-bar{position:absolute;top:4px;height:18px;border-radius:4px;background:#D8DCE2}
+.g-bar.is-toutiao{background:var(--red-100)}
+.g-peak{position:absolute;top:0;height:100%;border-radius:4px;background:var(--ink-3)}
+.g-bar.is-toutiao .g-peak{background:var(--red)}
+.g-outcome{font-size:12px;color:var(--ink-3);padding-left:14px}
+/* ============ 11 Battles ============ */
+.battles{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.battle-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:26px 24px;border-top:4px solid var(--red);transition:transform .25s,box-shadow .25s}
+@media(hover:hover){.battle-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-hover)}}
+.battle-card .b-no{font-size:36px;font-weight:700;color:var(--red-100);line-height:1;font-variant-numeric:tabular-nums}
+.battle-card h3{font-size:19px;margin:8px 0 2px}
+.battle-card .b-period{font-size:12.5px;color:var(--ink-3);font-variant-numeric:tabular-nums;margin-bottom:14px}
+.b-sec{margin-bottom:12px}
+.b-sec .b-k{font-size:12px;font-weight:700;color:var(--red);letter-spacing:.12em;margin-bottom:2px}
+.b-sec p{font-size:13.5px;color:var(--ink-2)}
+.b-sec.impact{background:var(--bg-soft);border-radius:8px;padding:12px 14px;margin-bottom:0}
+.b-sec.impact .b-k{color:var(--ink-1)}
+/* ============ 12 Insights ============ */
+.insights{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.ins-col{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px}
+.ins-col h3{font-size:18px;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.ins-col h3::before{content:"";width:10px;height:10px;border-radius:2px;background:var(--red)}
+.ins-col.lessons h3::before{background:var(--c-reg)}
+.ins-item{display:flex;gap:14px;margin-bottom:18px}
+.ins-item:last-child{margin-bottom:0}
+.ins-no{font-size:15px;font-weight:700;color:var(--red);font-variant-numeric:tabular-nums;flex-shrink:0;padding-top:2px}
+.ins-col.lessons .ins-no{color:var(--c-reg)}
+.ins-item h4{font-size:15px;margin-bottom:3px}
+.ins-item p{font-size:13.5px;color:var(--ink-2)}
+.conclusion{margin-top:32px;background:#fff;border:1px solid var(--line);border-left:5px solid var(--red);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px 32px}
+.conclusion .c-k{font-size:13px;font-weight:700;color:var(--red);letter-spacing:.18em;margin-bottom:10px}
+.conclusion p{font-size:16px;color:var(--ink-1);max-width:980px}
+/* ============ 13 Footer ============ */
+.footer{background:var(--ink-1);color:#A9AEB8;padding:56px 0 40px;font-size:13px}
+.footer h4{color:#fff;font-size:14px;margin-bottom:12px}
+.footer-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:48px}
+.footer li{margin-bottom:6px}
+.footer .disclaim{margin-top:8px;line-height:1.8}
+.footer-bottom{margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,255,255,.12);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:12px;color:#7A808C}
+/* ============ 14 Motion ============ */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .55s ease}
+.reveal.revealed{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none;transition:none}
+  .tl-card,.battle-card{transition:none}
+}
+/* ============ 15 Responsive ============ */
+@media(max-width:992px){
+  .stats{grid-template-columns:repeat(3,1fr)}
+  .battles{grid-template-columns:1fr}
+  .insights{grid-template-columns:1fr}
+  .phase-cards{grid-template-columns:repeat(2,1fr)}
+  .phase-band{display:none}
+  .footer-grid{grid-template-columns:1fr}
+  .hero h1{font-size:40px}
+}
+@media(max-width:768px){
+  .container{padding:0 20px}
+  .section{padding:56px 0}
+  .hero{padding:120px 0 56px}
+  .hero h1{font-size:32px}
+  .hero-sub{font-size:15px}
+  .sec-head h2{font-size:24px}
+  .stats{grid-template-columns:repeat(2,1fr);gap:14px}
+  .stat-num{font-size:30px}
+  .stat-num .unit{font-size:16px}
+  .phase-cards{grid-template-columns:1fr;gap:16px}
+  .phase-card .p-tag{min-height:0}
+  .chart-box{height:300px}
+  .chart-block{padding:18px}
+  /* 时间线：左轴单列 */
+  .tl-wrap::before{left:14px}
+  .tl-year{margin:8px 0 20px 0;width:76px;font-size:13px}
+  .tl-item,.tl-item.side-right{width:auto;margin-left:40px;margin-right:0}
+  .side-left .tl-dot,.side-right .tl-dot{left:-32px;right:auto}
+  .side-left.milestone .tl-dot,.side-right.milestone .tl-dot{left:-34px;right:auto}
+  .side-left::after,.side-right::after{left:-26px;right:auto;width:20px}
+  .tl-count{width:100%;margin-left:0}
+}
+@media(max-width:480px){
+  .hero h1{font-size:27px}
+  .stat-num{font-size:26px}
+  .gantt{padding:16px}
+}
+</style>
+</head>
+<body>
+
+<!-- ======= 导航 ======= -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="#hero"><span class="nav-logo">头</span>今日头条 · 战略复盘</a>
+    <div class="nav-links" id="navLinks">
+      <a href="#phases">阶段</a>
+      <a href="#timeline">时间线</a>
+      <a href="#charts">数据</a>
+      <a href="#ecosystem">生态</a>
+      <a href="#compete">格局</a>
+      <a href="#battles">战役</a>
+      <a href="#insights">启示</a>
+    </div>
+  </div>
+  <div class="progress" id="progressBar"></div>
+</nav>
+
+<!-- ======= 01 Hero ======= -->
+<header class="hero" id="hero">
+  <div class="hero-deco"></div>
+  <div class="hero-deco2"></div>
+  <div class="container">
+    <div class="hero-eyebrow">战略复盘报告 · 2012–2026</div>
+    <h1>从<em>信息分发革命</em>，<br>到生态让渡</h1>
+    <p class="hero-sub">一款资讯 App 如何用推荐算法撬动一个数千亿美元的生态，又如何在监管与产品生命周期的双重约束下，把自己沉淀为字节跳动的方法论与基础设施。</p>
+    <p class="hero-meta">研究对象：今日头条（字节跳动）｜数据截至 2026 年 6 月，基于公开报道与第三方机构估算</p>
+    <div class="stats" id="heroStats"></div>
+  </div>
+</header>
+
+<!-- ======= 02 战略阶段 ======= -->
+<section class="section soft" id="phases">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow">01 / EXECUTIVE SUMMARY</div>
+      <h2>五个战略阶段：单品爆款 → 生态基石</h2>
+      <p class="sec-sub">14 年里，今日头条经历了从算法颠覆者到被监管重塑、再到为抖音让渡集团位置的完整周期。</p>
+    </div>
+    <div class="phase-band reveal" id="phaseBand"></div>
+    <div class="phase-cards" id="phaseCards"></div>
+  </div>
+</section>
+
+<!-- ======= 03 时间线 ======= -->
+<section class="section" id="timeline">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow">02 / TIMELINE</div>
+      <h2>互动时间线：四条主线交织的 14 年</h2>
+      <p class="sec-sub">点击筛选，单独审视产品演进、资本节奏、监管与诉讼、生态扩张任意一条主线。</p>
+    </div>
+    <div class="tl-toolbar reveal" id="tlToolbar">
+      <button class="chip is-active" data-filter="all">全部</button>
+      <button class="chip" data-filter="product">产品</button>
+      <button class="chip" data-filter="capital">资本</button>
+      <button class="chip" data-filter="regulation">监管与诉讼</button>
+      <button class="chip" data-filter="eco">生态</button>
+      <span class="tl-count" id="tlCount"></span>
+    </div>
+    <div class="tl-wrap" id="tlList"></div>
+  </div>
+</section>
+
+<!-- ======= 04 数据透视 ======= -->
+<section class="section soft" id="charts">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow">03 / DATA PERSPECTIVE</div>
+      <h2>数据透视：增长、资本与商业化</h2>
+      <p class="sec-sub">三组核心曲线，验证前文叙事：用户见顶、估值跃迁与收入口径的时代切换。</p>
+    </div>
+    <div class="chart-block reveal">
+      <h3>用户规模：高速增长后的平台期</h3>
+      <p class="c-sub">今日头条 App 日活（DAU）与月活（MAU），单位：亿</p>
+      <div class="chart-box" id="chartUsers"></div>
+      <p class="chart-note">注：2019 年起字节跳动停止官方披露用户数据，其后数据为 QuestMobile、易观等第三方机构估算（图中标注"估"）。2016 年 DAU 6600 万与 MAU 1.4 亿为不同统计口径。</p>
+    </div>
+    <div class="chart-block reveal">
+      <h3>估值跃迁：13 年放大约 480 万倍（对数轴）</h3>
+      <p class="c-sub">字节跳动各轮融资/交易对应估值，单位：亿美元（对数刻度）</p>
+      <div class="chart-box" id="chartFunding"></div>
+      <p class="chart-note">注：估值为字节跳动公司整体口径（今日头条为早期估值的核心资产）。A/B 轮估值未正式披露，为业界推算；2024 年为员工期权回购定价，2025 年为私募二级市场约值。</p>
+    </div>
+    <div class="chart-block reveal">
+      <h3>商业化：从"头条的广告"到"字节的帝国"</h3>
+      <p class="c-sub">左：今日头条时代广告收入（亿元人民币）｜右：字节跳动集团营收（亿美元）</p>
+      <div class="chart-box" id="chartRevenue"></div>
+      <p class="chart-note">注：2015–2016 年以今日头条 App 为主要收入来源；2017 年起为字节跳动整体口径（抖音逐步成为主力）。集团营收为媒体报道与机构估算，2025 年为公司预期目标。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======= 05 产品生态 ======= -->
+<section class="section" id="ecosystem">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow">04 / ECOSYSTEM</div>
+      <h2>产品生态演化：头条系如何长成字节系</h2>
+      <p class="sec-sub">行 = 业务赛道，列 = 战略阶段。今日头条验证的"推荐 + 增长 + 商业化"中台，被复制到每一个赛道。</p>
+    </div>
+    <div class="eco-scroll reveal">
+      <div class="eco-grid" id="ecoGrid"></div>
+    </div>
+    <div class="eco-legend reveal">
+      <span><span class="badge st-active">在营</span>持续运营</span>
+      <span><span class="badge st-closed">关停</span>已永久关闭</span>
+      <span><span class="badge st-merged">并入</span>并入其他产品</span>
+      <span><span class="badge st-shrink">收缩</span>大幅收缩/边缘化</span>
+      <span><span class="badge st-jv">合资</span>股权重组为合资公司</span>
+    </div>
+  </div>
+</section>
+
+<!-- ======= 06 竞争格局 ======= -->
+<section class="section soft" id="compete">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow">05 / COMPETITIVE LANDSCAPE</div>
+      <h2>赛道兴衰：移动资讯的"剩者为王"</h2>
+      <p class="sec-sub">条带 = 存续期，深色段 = 强势期。算法信息流引发的军备竞赛中，跟随者几乎全部掉队。</p>
+    </div>
+    <div class="gantt reveal">
+      <div class="gantt-inner" id="ganttInner"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= 07 关键战役 ======= -->
+<section class="section" id="battles">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow">06 / KEY BATTLES</div>
+      <h2>三场关键战役：法律、政策与巨头</h2>
+      <p class="sec-sub">三类风险各来一次极限测试，每一场都永久改变了公司的成本结构与战略走向。</p>
+    </div>
+    <div class="battles" id="battleCards"></div>
+  </div>
+</section>
+
+<!-- ======= 08 战略启示 ======= -->
+<section class="section soft" id="insights">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow">07 / STRATEGIC INSIGHTS</div>
+      <h2>战略启示</h2>
+    </div>
+    <div class="insights">
+      <div class="ins-col reveal" id="insWins"><h3>成功要素</h3></div>
+      <div class="ins-col lessons reveal" id="insLessons"><h3>挑战与教训</h3></div>
+    </div>
+    <div class="conclusion reveal">
+      <div class="c-k">分析师结语</div>
+      <p id="insConclusion"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ======= 09 页脚 ======= -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4>数据来源</h4>
+        <ul id="footSources"></ul>
+      </div>
+      <div>
+        <h4>口径与免责声明</h4>
+        <p class="disclaim">字节跳动为非上市公司，未系统性披露财务与运营数据。本页用户规模、收入与估值数字综合自公开报道、公司公开声明及第三方机构估算，凡标注"约 / 估 / E"者均为非官方口径，仅供研究参考，不构成任何投资建议。事件日期以多源交叉核实为准，个别存在媒体报道差异。</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>今日头条战略复盘 · 2012–2026</span>
+      <span>报告生成于 2026 年 6 月</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   A. DATA —— 唯一数据源：全部史实、数字集中于此
+   ============================================================ */
+const DATA = {
+  heroStats: [
+    { value: 1000, decimals: 0, unit: '万', label: '上线 90 天用户', note: '2012 年 · 冷启动神话' },
+    { value: 1.4, decimals: 1, unit: '亿', label: '峰值日活 DAU', note: '2020 年前后' },
+    { value: 3.44, decimals: 2, unit: '亿', label: '月活 MAU', note: '2022.6 · 资讯类唯一 TOP20' },
+    { value: 76, decimals: 0, unit: '分钟', label: '人均单日时长', note: '2022 年 · 用户黏性' },
+    { prefix: '$', value: 4800, decimals: 0, unit: '亿', label: '字节跳动估值（约）', note: '2025 年 · 起点 $100 万' }
+  ],
+
+  phases: [
+    { range: '2012–2014', name: '算法奇袭', shade: '#F8B5B6', darkText: true,
+      tagline: '用推荐引擎重构资讯分发，"信息找人"取代"人找信息"。',
+      points: ['2012.8 上线，90 天用户破 1000 万', '2014.6 激活用户 1.2 亿，C 轮估值 $5 亿', '版权风波爆发，倒逼内容生态转型'],
+      metric: { v: '1.2亿', l: '2014 年激活用户' } },
+    { range: '2015–2016', name: '内容生态扩张', shade: '#F47B7C',
+      tagline: '从分发平台转向内容生产平台，用补贴养出自媒体生态。',
+      points: ['"千人万元"开启自媒体补贴大战', '2016.10 DAU 6600 万、激活用户 6 亿', 'D 轮估值 $110 亿；抖音同年上线'],
+      metric: { v: '6600万', l: '2016 年 DAU' } },
+    { range: '2017–2018', name: '巨头碰撞与监管洗礼', shade: '#F04142',
+      tagline: '版权、监管、巨头三线作战，触达内容产业的天花板。',
+      points: ['微头条 / 悟空问答全面出击社交问答', '约谈 → 下架 3 周 → 内涵段子永久关停', '头腾大战互诉；Pre-IPO 估值 $750 亿'],
+      metric: { v: '10000人', l: '2018 年审核团队' } },
+    { range: '2019–2021', name: '位置让渡与组织整合', shade: '#D63031',
+      tagline: '抖音反超成为集团引擎，头条从主角转为板块业务。',
+      points: ['负责人三度更替（陈林→朱文佳→陈熙）', '2020 DAU 峰值 1.4 亿，此后增长见顶', '2021.11 六大 BU 重组，并入抖音板块'],
+      metric: { v: '1.4亿', l: '2020 年 DAU 峰值' } },
+    { range: '2022–2026', name: '存量深耕与 AI 重构', shade: '#C5292A',
+      tagline: '从增长引擎沉淀为生态基础设施，AI 治理与改造并行。',
+      points: ['MAU 稳定 3 亿+，资讯类唯一 TOP20', 'AI 低质内容治理：2025 年处置 260 万条', '仍居字节 5 个日活过亿 App 之列'],
+      metric: { v: '3.44亿', l: '2022 年 MAU' } }
+  ],
+
+  // cat: product 产品 | capital 资本 | regulation 监管与诉讼 | eco 生态
+  // weight: 2 = 里程碑（高亮大卡）
+  timeline: [
+    { date: '2012.03', year: 2012, cat: 'eco', weight: 2, title: '字节跳动成立',
+      desc: '张一鸣在北京知春路一间民宅创立字节跳动。此前他历经酷讯、饭否、九九房，确信"个性化推荐"将重构信息分发。' },
+    { date: '2012.03', year: 2012, cat: 'eco', weight: 1, title: '内涵段子上线',
+      desc: '公司首个爆款产品，验证了流量获取与分发能力，后成长为 2 亿用户的社区。' },
+    { date: '2012.07', year: 2012, cat: 'capital', weight: 1, title: 'A 轮融资 100 万美元',
+      desc: 'SIG 海纳亚洲投资。彼时"个性化推荐资讯"尚是无人看好的冷门赛道。' },
+    { date: '2012.08', year: 2012, cat: 'product', weight: 2, title: '今日头条 App 上线',
+      desc: '口号"你关心的，才是头条"。没有编辑、没有总编室，由推荐引擎决定每个人看什么——"信息找人"模式自此开启。' },
+    { date: '2012.11', year: 2012, cat: 'product', weight: 1, title: '上线 90 天用户破 1000 万',
+      desc: '冷启动阶段借预装与算法留存实现爆发，验证了推荐分发对门户编辑模式的代差优势。' },
+    { date: '2013.09', year: 2013, cat: 'capital', weight: 1, title: 'B 轮融资 1000 万美元',
+      desc: 'DST（尤里·米尔纳）与奇虎 360 投资。国际顶级成长基金开始注意到这家算法公司。' },
+    { date: '2013.12', year: 2013, cat: 'product', weight: 1, title: '用户 5000 万，DAU 破 1000 万',
+      desc: '2013.8 累计用户达 5000 万，年底日活突破 1000 万，开始进入主流资讯平台行列。' },
+    { date: '2014.06', year: 2014, cat: 'regulation', weight: 2, title: '版权风波：媒体围剿"搬运工"',
+      desc: '《新京报》发社论指其侵权，搜狐起诉索赔 1100 万元，国家版权局立案调查。"我们不生产新闻"的模式遭遇第一次合法性危机。' },
+    { date: '2014.06', year: 2014, cat: 'capital', weight: 2, title: 'C 轮 1 亿美元，估值 5 亿美元',
+      desc: '红杉中国、新浪微博领投。同期披露：激活用户 1.2 亿、DAU 1300 万。资本市场首次为"算法分发"给出高定价。' },
+    { date: '2015.09', year: 2015, cat: 'product', weight: 1, title: '头条号"千人万元计划"',
+      desc: '承诺让 1000 位创作者月入过万，正面回应版权质疑：从"搬运"内容转向补贴生产内容，自建供给侧。' },
+    { date: '2016.09', year: 2016, cat: 'eco', weight: 2, title: '抖音上线',
+      desc: '头条验证的"推荐 + 增长"中台被复制到短视频赛道（同期还有火山小视频）。这款产品日后将反超头条，成为集团引擎。' },
+    { date: '2016.10', year: 2016, cat: 'product', weight: 1, title: 'DAU 6600 万，激活用户 6 亿',
+      desc: '稳坐资讯类 App 头把交椅，人均使用时长大幅领先门户系新闻客户端。' },
+    { date: '2016.12', year: 2016, cat: 'capital', weight: 1, title: 'D 轮 10 亿美元，估值 110 亿美元',
+      desc: '红杉中国、建银国际等投资，跻身超级独角兽。"BAT 之外的第四极"叙事开始出现。' },
+    { date: '2017.04', year: 2017, cat: 'product', weight: 1, title: '微头条上线',
+      desc: '以 400 亿流量补贴吸引明星与大 V 入驻，正面切入微博腹地，开启社交化尝试。' },
+    { date: '2017.06', year: 2017, cat: 'product', weight: 1, title: '悟空问答独立，西瓜视频升级',
+      desc: '问答产品独立运营并重金签约答主对标知乎；头条视频升级为西瓜视频，对标 YouTube。' },
+    { date: '2017.08', year: 2017, cat: 'capital', weight: 1, title: 'E 轮 20 亿美元，估值约 220 亿美元',
+      desc: 'General Atlantic（泛大西洋）领投，国际资本加注，为出海并购备足弹药。' },
+    { date: '2017.11', year: 2017, cat: 'capital', weight: 2, title: '10 亿美元收购 Musical.ly',
+      desc: '买下北美音乐短视频平台，与 TikTok 合并的伏笔就此埋下——这是中国互联网出海史上回报最高的一笔并购。' },
+    { date: '2017.12', year: 2017, cat: 'regulation', weight: 2, title: '网信办约谈，频道停更整改',
+      desc: '因"传播低俗信息、导向问题"被约谈，6 个频道暂停更新 36 小时，社会频道永久关闭。监管收紧的第一声警钟。' },
+    { date: '2017全年', year: 2017, cat: 'product', weight: 1, title: 'DAU 突破 1.2 亿',
+      desc: '头条号创作者超 110 万，信息流广告收入约 150 亿元（字节整体口径），商业化全面起飞。' },
+    { date: '2018.04', year: 2018, cat: 'regulation', weight: 2, title: '至暗时刻：下架 3 周、内涵段子永久关停',
+      desc: '4.9 今日头条全网下架 3 周；4.10 广电总局责令永久关停内涵段子。算法分发模式遭遇最严厉的政策定性。' },
+    { date: '2018.04', year: 2018, cat: 'regulation', weight: 2, title: '张一鸣凌晨致歉信',
+      desc: '"产品走错了路"——宣布审核团队从 6000 人扩至 10000 人、整改算法、强化正能量权重。"算法价值观"自此成为行业命题。' },
+    { date: '2018.04', year: 2018, cat: 'eco', weight: 1, title: '公司品牌升级为"字节跳动"',
+      desc: '公司层面去"头条"化：从单一产品公司转向多产品生态公司，也为头条 App 隔离品牌风险。' },
+    { date: '2018.06', year: 2018, cat: 'regulation', weight: 2, title: '头腾大战互诉',
+      desc: '微信封禁头条系链接后，腾讯起诉字节系索赔 1 元并要求道歉，字节反诉索赔 9000 万元。两年间互诉数百起，2019 年后陆续和解撤诉。' },
+    { date: '2018.08', year: 2018, cat: 'eco', weight: 1, title: 'Musical.ly 并入 TikTok',
+      desc: '统一品牌出海，TikTok 自此进入全球超高速增长轨道，成为字节第二增长曲线。' },
+    { date: '2018.10', year: 2018, cat: 'capital', weight: 2, title: 'Pre-IPO 轮 40 亿美元，估值 750 亿美元',
+      desc: '软银愿景基金、KKR、泛大西洋等投资，超越 Uber 成为全球估值最高的未上市公司。' },
+    { date: '2018.11', year: 2018, cat: 'product', weight: 1, title: '陈林出任今日头条 CEO',
+      desc: '张一鸣交棒、退至集团层面。头条 App 第一次有了独立 CEO，也意味着它不再是公司的全部。' },
+    { date: '2019', year: 2019, cat: 'eco', weight: 1, title: 'App 工厂全速运转',
+      desc: '番茄小说、剪映上线，飞书走向市场。头条验证的中台方法论被批量复制到网文、工具与企业服务。' },
+    { date: '2019.11', year: 2019, cat: 'product', weight: 1, title: '朱文佳接任头条 CEO',
+      desc: '百度搜索出身的技术负责人上任，主推"头条全面搜索化"，试图在资讯之外再造一个入口。' },
+    { date: '2020.03', year: 2020, cat: 'capital', weight: 1, title: '估值达 1000 亿美元',
+      desc: 'Tiger Global 参与老股交易，字节成为全球首个千亿美元级未上市公司。此时估值故事的主角已是抖音与 TikTok。' },
+    { date: '2020', year: 2020, cat: 'product', weight: 1, title: 'DAU 峰值约 1.4 亿',
+      desc: '疫情资讯需求推高用户活跃至历史顶点。此后资讯大盘见顶，头条进入存量时代。' },
+    { date: '2021.02', year: 2021, cat: 'product', weight: 1, title: '陈熙接任头条负责人',
+      desc: '朱文佳调任 TikTok 技术线，原滴滴高管、抖音火山版负责人陈熙接手——头条与抖音的人事通道开始打通。' },
+    { date: '2021.05', year: 2021, cat: 'eco', weight: 2, title: '张一鸣宣布卸任 CEO',
+      desc: '联合创始人梁汝波接任，张一鸣转向长期战略。创始人时代落幕，公司进入职业化治理阶段。' },
+    { date: '2021.11', year: 2021, cat: 'eco', weight: 2, title: '六大 BU 重组：头条并入抖音板块',
+      desc: '集团重组为抖音、TikTok、飞书、火山引擎、大力教育、朝夕光年六大板块。今日头条、西瓜视频、搜索并入抖音——独立产品时代正式终结。' },
+    { date: '2022.06', year: 2022, cat: 'product', weight: 1, title: 'MAU 3.44 亿，资讯类唯一 TOP20',
+      desc: '注册用户累计约 7 亿，人均单日使用 76 分钟。增长虽止，黏性与基本盘仍是资讯行业绝对第一。' },
+    { date: '2022.12', year: 2022, cat: 'product', weight: 1, title: '张超接任头条负责人',
+      desc: '陈熙转岗 TikTok 电商，番茄小说负责人张超接手——头条与字节内容矩阵的协同进一步加深。' },
+    { date: '2023.08', year: 2023, cat: 'eco', weight: 1, title: '豆包大模型上线',
+      desc: '字节全面转向 AI。豆包 2024 年用户即破 1.6 亿，成为国内第一的 AI 助手，集团战略重心再次迁移。' },
+    { date: '2024.04', year: 2024, cat: 'eco', weight: 1, title: '美国通过"不卖就禁"法案',
+      desc: 'PAFACA 法案要求字节剥离 TikTok 美国业务，集团出海主引擎遭遇史上最大地缘政治风险。' },
+    { date: '2024', year: 2024, cat: 'product', weight: 1, title: 'AI 内容治理成为头条主叙事',
+      desc: '全年识别管控低质 AI 内容超 93 万条、处罚违规账号近 3 万个。算法平台的角色从"分发"转向"治理"。' },
+    { date: '2025.12', year: 2025, cat: 'eco', weight: 2, title: 'TikTok 美国合资方案落定',
+      desc: '历经关服、多轮延期后，甲骨文、银湖、MGX 各持 15%，字节保留 19.9% 并授权算法。2026.1 合资公司正式成立。' },
+    { date: '2025全年', year: 2025, cat: 'product', weight: 1, title: '2025 年平台治理战报',
+      desc: '处置低质 AI 内容 260 万余条、涉诈内容 135 万余条、网暴评论 3.6 亿条，推送反诈风险提醒 300 万次。' },
+    { date: '2026.03', year: 2026, cat: 'product', weight: 2, title: '发布《2025 年度平台治理白皮书》',
+      desc: '系统披露 AI 治理体系。2026 年初，字节 5 个日活过亿 App 中头条仍居其一——14 岁的它依然是中文资讯第一入口。' }
+  ],
+
+  charts: {
+    users: {
+      years: ['2013','2014','2015','2016','2017','2018','2019','2020','2021','2022'],
+      dau:  [0.1, 0.13, 0.3, 0.66, 1.2, 1.07, 1.1, 1.4, null, null],
+      dauEst: { '2019': 1, '2020': 1 },
+      mau:  [null, 0.4, null, 1.4, null, 2.68, 2.6, null, 3.0, 3.44],
+      mauEst: { '2021': 1, '2022': 1 }
+    },
+    funding: [
+      { x: 'A轮\n2012', v: 0.1,  vLabel: '$0.1亿*', round: 'A 轮', time: '2012.7',  investors: 'SIG 海纳亚洲', amount: '$100 万', est: true },
+      { x: 'B轮\n2013', v: 0.6,  vLabel: '$0.6亿*', round: 'B 轮', time: '2013.9',  investors: 'DST · 奇虎360', amount: '$1000 万', est: true },
+      { x: 'C轮\n2014', v: 5,    vLabel: '$5亿',    round: 'C 轮', time: '2014.6',  investors: '红杉中国 · 新浪微博', amount: '$1 亿' },
+      { x: 'D轮\n2016', v: 110,  vLabel: '$110亿',  round: 'D 轮', time: '2016.12', investors: '红杉中国 · 建银国际', amount: '$10 亿' },
+      { x: 'E轮\n2017', v: 220,  vLabel: '$220亿',  round: 'E 轮', time: '2017.8',  investors: 'General Atlantic', amount: '$20 亿' },
+      { x: 'Pre-IPO\n2018', v: 750, vLabel: '$750亿', round: 'Pre-IPO', time: '2018.10', investors: '软银愿景 · KKR · GA', amount: '$40 亿' },
+      { x: '老股交易\n2020', v: 1000, vLabel: '$1000亿', round: '老股交易', time: '2020.3', investors: 'Tiger Global', amount: '—' },
+      { x: '期权回购\n2024', v: 3000, vLabel: '$3000亿', round: '期权回购定价', time: '2024.11', investors: '公司回购（$180.7/股）', amount: '—' },
+      { x: '二级市场\n2025', v: 4800, vLabel: '约$4800亿*', round: '私募二级市场', time: '2025', investors: '区间 $3300–6000 亿', amount: '—', est: true }
+    ],
+    revenue: {
+      toutiao: { years: ['2015','2016','2017','2018'], values: [15, 90, 150, 500],
+                 est: { '2016': 1, '2017': 1 } },
+      bytedance: { years: ['2022','2023','2024','2025E'], values: [852, 1200, 1550, 1860],
+                   est: { '2022': 1, '2023': 1, '2025E': 1 } }
+    }
+  },
+
+  ecosystem: {
+    phaseHeads: [
+      { name: '算法奇袭', range: '2012–2014' },
+      { name: '生态扩张', range: '2015–2016' },
+      { name: '碰撞洗礼', range: '2017–2018' },
+      { name: '整合让渡', range: '2019–2021' },
+      { name: 'AI 重构', range: '2022–2026' }
+    ],
+    tracks: ['资讯与阅读', '短视频', '社交与问答', '企服与教育', 'AI 与前沿'],
+    products: [
+      { name: '今日头条', track: 0, phase: 0, year: '2012', status: 'active', desc: '主线产品 · MAU 3 亿+' },
+      { name: '内涵段子', track: 0, phase: 0, year: '2012', status: 'closed', desc: '2018.4 被责令永久关停' },
+      { name: '头条号', track: 0, phase: 1, year: '2015', status: 'active', desc: '创作者平台 · 180 万+ 账号' },
+      { name: '番茄小说', track: 0, phase: 3, year: '2019', status: 'active', desc: '免费网文 · 日活过亿' },
+      { name: '红果短剧', track: 0, phase: 4, year: '2023', status: 'active', desc: '免费短剧 · 日活过亿' },
+      { name: '火山小视频', track: 1, phase: 1, year: '2016', status: 'merged', desc: '2020 并入抖音（火山版）' },
+      { name: '抖音', track: 1, phase: 1, year: '2016', status: 'active', desc: '集团核心引擎 · DAU 巨头' },
+      { name: '西瓜视频', track: 1, phase: 2, year: '2017', status: 'active', desc: '中长视频 · 并入抖音板块' },
+      { name: 'TikTok', track: 1, phase: 2, year: '2017', status: 'jv', desc: '美国业务 2026 重组为合资' },
+      { name: '剪映', track: 1, phase: 3, year: '2019', status: 'active', desc: '视频工具 · 全球化（CapCut）' },
+      { name: '微头条', track: 2, phase: 2, year: '2017', status: 'active', desc: '内嵌社交流 · 对标微博' },
+      { name: '悟空问答', track: 2, phase: 2, year: '2017', status: 'closed', desc: '2021 下线 · 不敌知乎' },
+      { name: '多闪', track: 2, phase: 3, year: '2019', status: 'shrink', desc: '社交突围失败 · 边缘化' },
+      { name: '飞书', track: 3, phase: 3, year: '2019', status: 'active', desc: '协同办公 · 出海 Lark' },
+      { name: '火山引擎', track: 3, phase: 3, year: '2020', status: 'active', desc: '云服务 · AI 算力底座' },
+      { name: '大力教育', track: 3, phase: 3, year: '2020', status: 'shrink', desc: '2021"双减"后大幅收缩' },
+      { name: '豆包', track: 4, phase: 4, year: '2023', status: 'active', desc: 'AI 助手 · 用户 1.6 亿+' },
+      { name: '扣子 Coze', track: 4, phase: 4, year: '2024', status: 'active', desc: 'Agent 开发平台' }
+    ]
+  },
+
+  competitors: [
+    { name: '今日头条', sub: '字节跳动', start: 2012, end: 2026, peak: [2014, 2021], outcome: '赛道唯一 MAU 3 亿+ 玩家', isToutiao: true },
+    { name: '腾讯新闻', sub: '腾讯', start: 2012, end: 2026, peak: [2013, 2017], outcome: '持续运营，份额承压' },
+    { name: '网易新闻', sub: '网易', start: 2012, end: 2026, peak: [2012, 2016], outcome: '跟帖文化突围，体量掉队' },
+    { name: '一点资讯', sub: '凤凰系', start: 2013, end: 2026, peak: [2015, 2018], outcome: '持续衰退，融资困难' },
+    { name: '天天快报', sub: '腾讯', start: 2015, end: 2021, peak: [2016, 2018], outcome: '并入腾讯看点后淡出' },
+    { name: '趣头条', sub: '下沉市场', start: 2016, end: 2024, peak: [2018, 2019], outcome: '2018 上市即巅峰，2023 退市' },
+    { name: '百度 App', sub: '搜索+信息流', start: 2016, end: 2026, peak: [2018, 2022], outcome: '靠搜索护城河守住基本盘' }
+  ],
+  ganttRange: [2012, 2026],
+
+  battles: [
+    { no: '01', title: '版权争议', period: '2014–2015',
+      bg: '"我们不生产新闻，我们是新闻的搬运工"——转码与深度链接模式动了整个传统媒体的奶酪。',
+      conflict: '《新京报》发社论讨伐，搜狐起诉索赔 1100 万元，国家版权局立案调查，多家媒体跟进维权。',
+      result: '与主要媒体逐一和解、签订版权合作；2015 年推出头条号与"千人万元"补贴，转向自建内容供给。',
+      impact: '危机倒逼商业模式升级：从"搬运别人的内容"到"补贴生产自己的内容"，反而构筑了创作者生态护城河。' },
+    { no: '02', title: '监管整改', period: '2017–2018',
+      bg: '算法以时长与点击为唯一目标，低俗内容泛滥，"奶头乐"批评四起，监管层多次预警。',
+      conflict: '网信办约谈、频道停更；2018.4 今日头条全网下架 3 周，内涵段子被永久关停，公司命悬一线。',
+      result: '张一鸣凌晨发表致歉信，审核团队 6000→10000 人，算法全面整改，正能量内容权重提升。',
+      impact: '"算法价值观"成为全行业命题；内容审核成为永久性成本结构，纯算法叙事自此终结。' },
+    { no: '03', title: '头腾大战', period: '2018–2019',
+      bg: '抖音的爆发触及腾讯的社交与内容腹地，微信生态对头条系链接全面封禁。',
+      conflict: '腾讯起诉字节系索赔 1 元并要求道歉；字节反诉索赔 9000 万元；两年间双方互诉数百起。',
+      result: '2019 年后陆续和解撤诉。字节自建增长与流量体系，彻底放弃对微信生态的依赖。',
+      impact: '验证了字节"App 工厂 + 自有流量池"模式的独立性，中国移动互联网"腾讯系 vs 字节系"两极格局成形。' }
+  ],
+
+  insights: {
+    wins: [
+      { t: '算法红利的极致兑现', d: '用"信息找人"重构分发效率，在门户与微博的夹缝中切出新品类，并把推荐引擎沉淀为可复制的中台能力。' },
+      { t: '"App 工厂"方法论', d: '头条验证的"推荐 + 增长 + 商业化"三件套，批量孵化出抖音、TikTok、番茄小说——单品成功升维为组织能力。' },
+      { t: '资本与产品的节奏共振', d: '九轮融资几乎每一轮都踩在产品爆发拐点上，13 年估值放大约 480 万倍，为激进扩张持续供血。' },
+      { t: '敢于自我让渡', d: '当抖音展现更高 ROI 时，果断把流量、人才与组织位置让渡给新引擎，头条降格为板块业务而非死守山头。' }
+    ],
+    lessons: [
+      { t: '内容产业的"价值观税"', d: '纯算法无法对冲政策风险：2018 年下架与关停证明，价值观审核是内容平台的永久成本，而非可选项。' },
+      { t: '版权与原创的原罪', d: '"搬运"模式的合法性短板需要多年补课，早期省下的内容成本最终以诉讼、和解与补贴的形式加倍偿还。' },
+      { t: '社交壁垒难以算法破解', d: '微头条、悟空问答、多闪连续冲击腾讯系与知乎，均未形成网络效应——算法能分发内容，难以分发关系。' },
+      { t: '主航道老化的宿命', d: '资讯大盘 2020 年见顶后，头条从增长引擎退化为生态基础设施；单一品类的生命周期无法靠运营逆转。' }
+    ],
+    conclusion: '今日头条的 14 年，是一部"单品爆款 → 生态让渡"的战略样本：它用算法重新定义了内容分发，把一家民宅创业公司推上数千亿美元估值的起跑线；又在监管约束与产品生命周期的双重作用下，把自己沉淀为字节跳动的方法论、人才池与基础设施。评价它的成败，不能只看这一款 App 的曲线，而要看它孵化出的整个字节体系——这正是"产品会老去，能力会复利"的最佳注脚。'
+  },
+
+  sources: [
+    '澎湃新闻 · 张一鸣公开致歉信、TikTok 合资进展报道',
+    '36氪 / 虎嗅 / 钛媒体 · 历年头条与字节跳动深度报道',
+    '每日经济新闻 / 21 财经 · 2021 年字节跳动组织架构调整',
+    '新浪科技 / 人民网 ·"千人万元计划"、版权诉讼报道',
+    '维基百科 / 前瞻产业研究院 · 融资轮次与估值整理',
+    'QuestMobile / 易观千帆 · 2019 年后用户规模第三方估算',
+    '腾讯新闻 ·《2025 年度平台治理白皮书》发布报道（2026.3）',
+    '199IT / 界面新闻 · 字节跳动 2022–2025 营收数据汇总'
+  ]
+};
+
+/* ============================================================
+   B. Utils
+   ============================================================ */
+const $ = (sel, root) => (root || document).querySelector(sel);
+const $$ = (sel, root) => Array.from((root || document).querySelectorAll(sel));
+function el(tag, cls, html) {
+  const node = document.createElement(tag);
+  if (cls) node.className = cls;
+  if (html !== undefined) node.innerHTML = html;
+  return node;
+}
+function debounce(fn, ms) {
+  let t;
+  return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+}
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ============================================================
+   C. Renderers —— 纯函数：DATA → DOM
+   ============================================================ */
+const CAT_NAMES = { product: '产品', capital: '资本', regulation: '监管与诉讼', eco: '生态' };
+
+function renderHeroStats() {
+  const wrap = $('#heroStats');
+  DATA.heroStats.forEach(s => {
+    const card = el('div', 'stat-card reveal');
+    card.innerHTML =
+      `<div class="stat-num"><span class="num" data-value="${s.value}" data-decimals="${s.decimals}" data-prefix="${s.prefix || ''}">${s.prefix || ''}0</span><span class="unit">${s.unit}</span></div>` +
+      `<div class="stat-label">${s.label}</div><div class="stat-note">${s.note}</div>`;
+    wrap.appendChild(card);
+  });
+}
+
+function renderPhases() {
+  const band = $('#phaseBand');
+  const cards = $('#phaseCards');
+  DATA.phases.forEach(p => {
+    const seg = el('div', 'phase-seg' + (p.darkText ? ' dark-text' : ''));
+    seg.style.background = p.shade;
+    seg.innerHTML = `<div class="p-range">${p.range}</div><div class="p-name">${p.name}</div>`;
+    band.appendChild(seg);
+
+    const card = el('div', 'phase-card reveal');
+    card.style.borderTopColor = p.shade;
+    card.innerHTML =
+      `<div class="p-range">${p.range}</div><h3>${p.name}</h3>` +
+      `<p class="p-tag">${p.tagline}</p>` +
+      `<ul>${p.points.map(x => `<li>${x}</li>`).join('')}</ul>` +
+      `<div class="phase-metric"><div class="m-v">${p.metric.v}</div><div class="m-l">${p.metric.l}</div></div>`;
+    cards.appendChild(card);
+  });
+}
+
+function renderTimeline() {
+  const wrap = $('#tlList');
+  let lastYear = null;
+  DATA.timeline.forEach(ev => {
+    if (ev.year !== lastYear) {
+      const y = el('div', 'tl-year', String(ev.year));
+      y.dataset.year = ev.year;
+      wrap.appendChild(y);
+      lastYear = ev.year;
+    }
+    const item = el('div', `tl-item cat-${ev.cat}${ev.weight === 2 ? ' milestone' : ''} reveal`);
+    item.dataset.cat = ev.cat;
+    item.innerHTML =
+      `<div class="tl-card"><span class="tl-date">${ev.date} · ${CAT_NAMES[ev.cat]}</span>` +
+      `<h4>${ev.title}</h4><p>${ev.desc}</p></div><span class="tl-dot"></span>`;
+    wrap.appendChild(item);
+  });
+}
+
+function renderEcosystem() {
+  const grid = $('#ecoGrid');
+  grid.appendChild(el('div', 'eco-head', '赛道 \\ 阶段'));
+  DATA.ecosystem.phaseHeads.forEach(h => {
+    grid.appendChild(el('div', 'eco-head', `${h.name}<span class="e-range">${h.range}</span>`));
+  });
+  const BADGES = { active: ['st-active', '在营'], closed: ['st-closed', '关停'], merged: ['st-merged', '并入'], shrink: ['st-shrink', '收缩'], jv: ['st-jv', '合资'] };
+  DATA.ecosystem.tracks.forEach((track, ti) => {
+    grid.appendChild(el('div', 'eco-track', track));
+    for (let pi = 0; pi < 5; pi++) {
+      const cell = el('div', 'eco-cell');
+      DATA.ecosystem.products
+        .filter(pr => pr.track === ti && pr.phase === pi)
+        .forEach(pr => {
+          const [bCls, bTxt] = BADGES[pr.status];
+          const card = el('div', `eco-card st-${pr.status}`);
+          card.innerHTML =
+            `<div class="e-top"><span class="e-name">${pr.name}</span><span class="badge ${bCls}">${bTxt}</span></div>` +
+            `<div class="e-desc">${pr.year} 年 · ${pr.desc}</div>`;
+          cell.appendChild(card);
+        });
+      grid.appendChild(cell);
+    }
+  });
+}
+
+function renderGantt() {
+  const inner = $('#ganttInner');
+  const [r0, r1] = DATA.ganttRange;
+  const span = r1 - r0;
+  const pos = y => ((y - r0) / span * 100);
+
+  const axis = el('div', 'g-axis');
+  axis.appendChild(el('div'));
+  const ticks = el('div', 'g-ticks');
+  for (let y = r0; y <= r1; y += 2) {
+    const t = el('span', 'g-tick', String(y));
+    t.style.left = pos(y) + '%';
+    ticks.appendChild(t);
+  }
+  axis.appendChild(ticks);
+  axis.appendChild(el('div'));
+  inner.appendChild(axis);
+
+  DATA.competitors.forEach(c => {
+    const row = el('div', 'g-row reveal');
+    row.appendChild(el('div', 'g-label', `${c.name}<span class="g-sublabel">${c.sub}</span>`));
+    const track = el('div', 'g-track');
+    const bar = el('div', 'g-bar' + (c.isToutiao ? ' is-toutiao' : ''));
+    bar.style.left = pos(c.start) + '%';
+    bar.style.width = (pos(c.end) - pos(c.start)) + '%';
+    const peak = el('div', 'g-peak');
+    const barSpan = c.end - c.start;
+    peak.style.left = ((c.peak[0] - c.start) / barSpan * 100) + '%';
+    peak.style.width = ((c.peak[1] - c.peak[0]) / barSpan * 100) + '%';
+    bar.appendChild(peak);
+    track.appendChild(bar);
+    row.appendChild(track);
+    row.appendChild(el('div', 'g-outcome', c.outcome));
+    inner.appendChild(row);
+  });
+}
+
+function renderBattles() {
+  const wrap = $('#battleCards');
+  DATA.battles.forEach(b => {
+    const card = el('div', 'battle-card reveal');
+    card.innerHTML =
+      `<div class="b-no">${b.no}</div><h3>${b.title}</h3><div class="b-period">${b.period}</div>` +
+      `<div class="b-sec"><div class="b-k">背景</div><p>${b.bg}</p></div>` +
+      `<div class="b-sec"><div class="b-k">冲突</div><p>${b.conflict}</p></div>` +
+      `<div class="b-sec"><div class="b-k">结果</div><p>${b.result}</p></div>` +
+      `<div class="b-sec impact"><div class="b-k">战略影响</div><p>${b.impact}</p></div>`;
+    wrap.appendChild(card);
+  });
+}
+
+function renderInsights() {
+  const mk = (listEl, arr) => {
+    arr.forEach((it, i) => {
+      const item = el('div', 'ins-item');
+      item.innerHTML = `<span class="ins-no">0${i + 1}</span><div><h4>${it.t}</h4><p>${it.d}</p></div>`;
+      listEl.appendChild(item);
+    });
+  };
+  mk($('#insWins'), DATA.insights.wins);
+  mk($('#insLessons'), DATA.insights.lessons);
+  $('#insConclusion').textContent = DATA.insights.conclusion;
+}
+
+function renderFooter() {
+  const ul = $('#footSources');
+  DATA.sources.forEach(s => ul.appendChild(el('li', '', s)));
+}
+
+/* ============================================================
+   D. Charts —— ECharts 双 CDN 加载 + 降级
+   ============================================================ */
+const ECHARTS_URLS = [
+  'https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js',
+  'https://unpkg.com/echarts@5.5.0/dist/echarts.min.js',
+  'https://cdn.bootcdn.net/ajax/libs/echarts/5.5.0/echarts.min.js'
+];
+function loadScript(url) {
+  return new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    const timer = setTimeout(() => { s.remove(); reject(new Error('timeout')); }, 8000);
+    s.src = url;
+    s.onload = () => { clearTimeout(timer); resolve(); };
+    s.onerror = () => { clearTimeout(timer); s.remove(); reject(new Error('load error')); };
+    document.head.appendChild(s);
+  });
+}
+async function loadECharts() {
+  for (const url of ECHARTS_URLS) {
+    try { await loadScript(url); if (window.echarts) return window.echarts; } catch (e) { /* 尝试下一个 CDN */ }
+  }
+  return null;
+}
+
+function baseOption() {
+  return {
+    textStyle: { fontFamily: getComputedStyle(document.body).fontFamily, color: '#4E5969' },
+    grid: { left: 16, right: 24, top: 56, bottom: 12, containLabel: true },
+    tooltip: {
+      backgroundColor: '#fff', borderColor: '#E5E6EB', borderWidth: 1,
+      textStyle: { color: '#1F2329', fontSize: 13 },
+      extraCssText: 'box-shadow:0 4px 16px rgba(31,35,41,.12);border-radius:8px;'
+    },
+    legend: { top: 0, left: 0, icon: 'roundRect', itemWidth: 14, itemHeight: 8, textStyle: { color: '#4E5969' } }
+  };
+}
+const AXIS = {
+  axisLine: { lineStyle: { color: '#C9CDD4' } },
+  axisTick: { show: false },
+  axisLabel: { color: '#86909C' },
+  splitLine: { lineStyle: { color: '#F0F1F3', type: 'dashed' } }
+};
+
+function buildUserChart(ec, dom) {
+  const u = DATA.charts.users;
+  const chart = ec.init(dom);
+  const fmtVal = (v, estMap, year) => v == null ? '—' : (v + ' 亿' + (estMap[year] ? '（估）' : ''));
+  chart.setOption(Object.assign(baseOption(), {
+    legend: { top: 0, left: 0, data: ['日活 DAU', '月活 MAU'] },
+    xAxis: Object.assign({ type: 'category', data: u.years, boundaryGap: false }, AXIS, { splitLine: { show: false } }),
+    yAxis: Object.assign({ type: 'value', name: '亿', nameTextStyle: { color: '#86909C' } }, AXIS),
+    tooltip: Object.assign(baseOption().tooltip, {
+      trigger: 'axis',
+      formatter: params => {
+        const year = params[0].axisValue;
+        let html = `<b>${year} 年</b>`;
+        params.forEach(p => {
+          const estMap = p.seriesName.includes('DAU') ? u.dauEst : u.mauEst;
+          html += `<br>${p.marker}${p.seriesName}：${fmtVal(p.value, estMap, year)}`;
+        });
+        return html;
+      }
+    }),
+    series: [
+      {
+        name: '日活 DAU', type: 'line', data: u.dau, smooth: 0.3, symbolSize: 7,
+        lineStyle: { width: 3, color: '#F04142' }, itemStyle: { color: '#F04142' },
+        areaStyle: { color: { type: 'linear', x: 0, y: 0, x2: 0, y2: 1,
+          colorStops: [{ offset: 0, color: 'rgba(240,65,66,.18)' }, { offset: 1, color: 'rgba(240,65,66,0)' }] } },
+        markPoint: { data: [{ coord: ['2020', 1.4] }], symbol: 'pin', symbolSize: 28,
+          itemStyle: { color: '#F04142' },
+          label: { show: true, position: 'top', distance: 6, formatter: '峰值 1.4亿',
+            color: '#1F2329', fontSize: 11, fontWeight: 600 } },
+        markLine: { symbol: 'none', lineStyle: { color: '#3B5BDB', type: 'dashed' },
+          label: { color: '#3B5BDB', fontSize: 11, formatter: '2018.4 下架整改' },
+          data: [{ xAxis: '2018' }] }
+      },
+      {
+        name: '月活 MAU', type: 'line', data: u.mau, connectNulls: true, smooth: 0.3, symbolSize: 6,
+        lineStyle: { width: 2, color: '#86909C', type: 'dashed' }, itemStyle: { color: '#86909C' }
+      }
+    ]
+  }));
+  return chart;
+}
+
+function buildFundingChart(ec, dom) {
+  const f = DATA.charts.funding;
+  const chart = ec.init(dom);
+  chart.setOption(Object.assign(baseOption(), {
+    grid: { left: 16, right: 40, top: 48, bottom: 12, containLabel: true },
+    xAxis: Object.assign({ type: 'category', data: f.map(d => d.x),
+      axisLabel: { color: '#86909C', interval: 0, fontSize: 11, lineHeight: 15 } },
+      { axisLine: AXIS.axisLine, axisTick: AXIS.axisTick, splitLine: { show: false } }),
+    yAxis: Object.assign({ type: 'log', logBase: 10, min: 0.05, max: 10000,
+      axisLabel: { color: '#86909C', formatter: v => v < 1 ? `$${v * 10000 / 100}千万` : (v >= 10000 ? '' : `$${v}亿`) } },
+      { axisLine: AXIS.axisLine, axisTick: AXIS.axisTick, splitLine: AXIS.splitLine }),
+    tooltip: Object.assign(baseOption().tooltip, {
+      trigger: 'item',
+      formatter: p => {
+        const d = f[p.dataIndex];
+        return `<b>${d.round}</b>（${d.time}）<br>估值：${d.vLabel.replace('*', '')}${d.est ? '（推算/约值）' : ''}` +
+               `<br>融资额：${d.amount}<br>投资方：${d.investors}`;
+      }
+    }),
+    series: [{
+      type: 'line', step: 'end', data: f.map(d => d.v), symbolSize: 11,
+      lineStyle: { width: 2.5, color: '#4E5969' },
+      itemStyle: { color: '#fff', borderColor: '#F04142', borderWidth: 3 },
+      label: { show: true, position: 'top', fontSize: 11, fontWeight: 600, color: '#1F2329',
+        formatter: p => f[p.dataIndex].vLabel }
+    }]
+  }));
+  return chart;
+}
+
+function buildRevenueChart(ec, dom) {
+  const r = DATA.charts.revenue;
+  const chart = ec.init(dom);
+  const barLabel = { show: true, position: 'top', fontSize: 11, fontWeight: 600, color: '#1F2329' };
+  chart.setOption(Object.assign(baseOption(), {
+    title: [
+      { text: '今日头条时代 · 广告收入（亿元）', left: '4%', top: 0, textStyle: { fontSize: 13, color: '#4E5969', fontWeight: 600 } },
+      { text: '字节跳动时代 · 集团营收（亿美元）', left: '56%', top: 0, textStyle: { fontSize: 13, color: '#4E5969', fontWeight: 600 } }
+    ],
+    legend: { show: false },
+    grid: [
+      { left: '4%', right: '54%', top: 48, bottom: 12, containLabel: true },
+      { left: '56%', right: '3%', top: 48, bottom: 12, containLabel: true }
+    ],
+    xAxis: [
+      Object.assign({ gridIndex: 0, type: 'category', data: r.toutiao.years }, AXIS, { splitLine: { show: false } }),
+      Object.assign({ gridIndex: 1, type: 'category', data: r.bytedance.years }, AXIS, { splitLine: { show: false } })
+    ],
+    yAxis: [
+      Object.assign({ gridIndex: 0, type: 'value' }, AXIS),
+      Object.assign({ gridIndex: 1, type: 'value' }, AXIS)
+    ],
+    tooltip: Object.assign(baseOption().tooltip, {
+      trigger: 'item',
+      formatter: p => {
+        const isTt = p.seriesIndex === 0;
+        const est = isTt ? r.toutiao.est[p.name] : r.bytedance.est[p.name];
+        return `<b>${p.name} 年</b><br>${p.marker}${isTt ? '广告收入' : '集团营收'}：` +
+               `${p.value} ${isTt ? '亿元' : '亿美元'}${est ? '（约/估）' : ''}`;
+      }
+    }),
+    series: [
+      { type: 'bar', xAxisIndex: 0, yAxisIndex: 0, data: r.toutiao.values, barMaxWidth: 36,
+        itemStyle: { borderRadius: [4, 4, 0, 0], color: { type: 'linear', x: 0, y: 0, x2: 0, y2: 1,
+          colorStops: [{ offset: 0, color: '#F04142' }, { offset: 1, color: '#F8B5B6' }] } },
+        label: barLabel },
+      { type: 'bar', xAxisIndex: 1, yAxisIndex: 1, data: r.bytedance.values, barMaxWidth: 36,
+        itemStyle: { borderRadius: [4, 4, 0, 0], color: { type: 'linear', x: 0, y: 0, x2: 0, y2: 1,
+          colorStops: [{ offset: 0, color: '#4E5969' }, { offset: 1, color: '#C9CDD4' }] } },
+        label: barLabel }
+    ]
+  }));
+  return chart;
+}
+
+/* ---- 无 ECharts 时的 HTML 降级 ---- */
+function renderChartFallback() {
+  const tip = '<p class="fb-tip">图表组件加载失败（可能处于离线环境），以下为数据摘要：</p>';
+  const u = DATA.charts.users;
+  $('#chartUsers').style.height = 'auto';
+  $('#chartUsers').innerHTML = tip +
+    `<div class="chart-fallback"><table class="fb-table"><tr><th>年份</th><th>日活 DAU</th><th>月活 MAU</th></tr>` +
+    u.years.map((y, i) =>
+      `<tr><td>${y}</td><td class="${y === '2020' ? 'hl' : ''}">${u.dau[i] == null ? '—' : u.dau[i] + ' 亿' + (u.dauEst[y] ? '（估）' : '')}</td>` +
+      `<td>${u.mau[i] == null ? '—' : u.mau[i] + ' 亿' + (u.mauEst[y] ? '（估）' : '')}</td></tr>`).join('') +
+    `</table></div>`;
+
+  $('#chartFunding').style.height = 'auto';
+  $('#chartFunding').innerHTML = tip +
+    `<div class="chart-fallback"><table class="fb-table"><tr><th>轮次</th><th>时间</th><th>估值</th><th>投资方</th></tr>` +
+    DATA.charts.funding.map(d =>
+      `<tr><td>${d.round}</td><td>${d.time}</td><td class="hl">${d.vLabel.replace('*', d.est ? '（约）' : '')}</td><td>${d.investors}</td></tr>`).join('') +
+    `</table></div>`;
+
+  const r = DATA.charts.revenue;
+  const maxT = Math.max(...r.toutiao.values), maxB = Math.max(...r.bytedance.values);
+  const bars = (years, vals, max, unit) => years.map((y, i) =>
+    `<div class="fb-bar-row"><span>${y}</span><div class="fb-bar-track"><div class="fb-bar-fill" style="width:${vals[i] / max * 100}%"></div></div><span>${vals[i]} ${unit}</span></div>`).join('');
+  $('#chartRevenue').style.height = 'auto';
+  $('#chartRevenue').innerHTML = tip +
+    `<div class="chart-fallback"><p style="font-size:13px;font-weight:600;margin-bottom:8px">今日头条时代 · 广告收入</p>${bars(r.toutiao.years, r.toutiao.values, maxT, '亿元')}` +
+    `<p style="font-size:13px;font-weight:600;margin:16px 0 8px">字节跳动时代 · 集团营收</p>${bars(r.bytedance.years, r.bytedance.values, maxB, '亿美元')}</div>`;
+}
+
+async function setupCharts() {
+  const ec = await loadECharts();
+  if (!ec) { renderChartFallback(); return; }
+  const instances = [];
+  const builders = [
+    ['#chartUsers', buildUserChart],
+    ['#chartFunding', buildFundingChart],
+    ['#chartRevenue', buildRevenueChart]
+  ];
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const build = builders.find(b => $(b[0]) === entry.target);
+      if (build && !entry.target.dataset.inited) {
+        entry.target.dataset.inited = '1';
+        instances.push(build[1](ec, entry.target));
+      }
+      io.unobserve(entry.target);
+    });
+  }, { rootMargin: '200px 0px' });
+  builders.forEach(b => io.observe($(b[0])));
+  window.addEventListener('resize', debounce(() => instances.forEach(c => c.resize()), 200));
+}
+
+/* ============================================================
+   E. Interact —— 时间线筛选 / scrollspy / 数字动画
+   ============================================================ */
+function setupTimelineFilter() {
+  const toolbar = $('#tlToolbar');
+  const countEl = $('#tlCount');
+  let activeFilter = 'all';
+
+  function applyFilter() {
+    const items = $$('.tl-item');
+    let visible = 0;
+    items.forEach(item => {
+      const show = activeFilter === 'all' || item.dataset.cat === activeFilter;
+      item.classList.toggle('is-hidden', !show);
+      if (show) {
+        // 可见项按奇偶重排左右侧，保证筛选后仍交错
+        item.classList.toggle('side-left', visible % 2 === 0);
+        item.classList.toggle('side-right', visible % 2 === 1);
+        visible++;
+      }
+    });
+    // 隐藏没有可见事件的年份节点
+    $$('.tl-year').forEach(yearEl => {
+      let node = yearEl.nextElementSibling;
+      let hasVisible = false;
+      while (node && !node.classList.contains('tl-year')) {
+        if (node.classList.contains('tl-item') && !node.classList.contains('is-hidden')) { hasVisible = true; break; }
+        node = node.nextElementSibling;
+      }
+      yearEl.classList.toggle('is-hidden', !hasVisible);
+    });
+    countEl.textContent = `显示 ${visible} / ${$$('.tl-item').length} 条事件`;
+  }
+
+  toolbar.addEventListener('click', e => {
+    const chip = e.target.closest('.chip');
+    if (!chip) return;
+    activeFilter = chip.dataset.filter;
+    $$('.chip', toolbar).forEach(c => c.classList.toggle('is-active', c === chip));
+    applyFilter();
+  });
+  applyFilter();
+}
+
+function setupScrollUI() {
+  const bar = $('#progressBar');
+  const links = $$('#navLinks a');
+  const sections = links.map(a => $(a.getAttribute('href')));
+  let ticking = false;
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      const max = document.documentElement.scrollHeight - innerHeight;
+      bar.style.width = (max > 0 ? (scrollY / max * 100) : 0) + '%';
+      let current = -1;
+      sections.forEach((sec, i) => { if (sec && sec.getBoundingClientRect().top <= 96) current = i; });
+      links.forEach((a, i) => a.classList.toggle('active', i === current));
+      ticking = false;
+    });
+  }
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+}
+
+function setupCountUp() {
+  const nums = $$('#heroStats .num');
+  if (reducedMotion) {
+    nums.forEach(n => { n.textContent = n.dataset.prefix + Number(n.dataset.value).toLocaleString(); });
+    return;
+  }
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const n = entry.target;
+      io.unobserve(n);
+      const target = Number(n.dataset.value);
+      const decimals = Number(n.dataset.decimals);
+      const prefix = n.dataset.prefix;
+      const t0 = performance.now(), dur = 1400;
+      (function tick(t) {
+        const p = Math.min((t - t0) / dur, 1);
+        const eased = 1 - Math.pow(1 - p, 3); // easeOutCubic
+        const val = target * eased;
+        n.textContent = prefix + (decimals ? val.toFixed(decimals) : Math.round(val).toLocaleString());
+        if (p < 1) requestAnimationFrame(tick);
+      })(t0);
+    });
+  }, { threshold: 0.4 });
+  nums.forEach(n => io.observe(n));
+}
+
+/* ============================================================
+   F. Motion —— 滚动渐入
+   ============================================================ */
+function setupReveal() {
+  const targets = $$('.reveal');
+  if (reducedMotion || !('IntersectionObserver' in window)) {
+    targets.forEach(t => t.classList.add('revealed'));
+    return;
+  }
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) { entry.target.classList.add('revealed'); io.unobserve(entry.target); }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -24px 0px' });
+  targets.forEach(t => io.observe(t));
+}
+
+/* ============================================================
+   G. main()
+   ============================================================ */
+function main() {
+  renderHeroStats();
+  renderPhases();
+  renderTimeline();
+  renderEcosystem();
+  renderGantt();
+  renderBattles();
+  renderInsights();
+  renderFooter();
+  setupTimelineFilter();
+  setupScrollUI();
+  setupCountUp();
+  setupReveal();
+  setupCharts(); // 异步旁路：CDN 失败不影响主体内容
+}
+document.addEventListener('DOMContentLoaded', main);
+</script>
+</body>
+</html>
